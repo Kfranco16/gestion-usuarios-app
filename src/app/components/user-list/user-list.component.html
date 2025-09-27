@@ -1,18 +1,12 @@
-<div class="container mt-5">
-  <div class="row">
-    <!-- Usamos el nuevo bloque de control @for -->
-    @for (user of users(); track user.id) {
-    <div class="col-12 col-md-6 col-lg-3 mb-4">
-      <!-- Por ahora solo mostramos el nombre. En el siguiente paso usaremos el user-card -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
-        </div>
-      </div>
-    </div>
-    } @empty {
-    <!-- Esto se muestra si el array de usuarios está vacío -->
-    <p>No hay usuarios para mostrar.</p>
-    }
+<!-- src/app/components/user-list/user-list.component.html -->
+<div class="row">
+  @for (user of users(); track user.id) {
+  <div class="col-12 col-md-6 col-lg-3 mb-4">
+    <!-- Reemplazamos el div genérico con nuestro componente -->
+    <!-- Le pasamos el objeto 'user' del bucle a la propiedad 'user' del componente hijo -->
+    <app-user-card [user]="user"></app-user-card>
   </div>
+  } @empty {
+  <p>Cargando usuarios o no hay usuarios para mostrar...</p>
+  }
 </div>

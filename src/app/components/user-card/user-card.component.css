@@ -1,0 +1,13 @@
+/* src/app/components/user-card/user-card.component.css */
+.user-image-container {
+  width: 120px;
+  height: 120px;
+}
+
+.user-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* La clave para hacerla circular */
+  object-fit: cover; /* Evita que la imagen se deforme */
+  border: 4px solid #007bff; /* Un borde azul como en el wireframe */
+}

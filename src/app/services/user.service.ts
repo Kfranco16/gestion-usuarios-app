@@ -1,18 +1,20 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../interfaces/iuser.interface';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { Iresponse } from '../interfaces/iresponse.interface';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private http = inject(HttpClient);
   private apiUrl = 'https://peticiones.online/api/users';
 
-  getUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.apiUrl);
+  getUsers(page: number): Observable<Iresponse> {
+    // Usamos el objeto de opciones de HttpClient para añadir parámetros a la URL de forma segura
+    const options = { params: { page: page.toString() } };
+    return this.http.get<Iresponse>(this.apiUrl, options);
   }
-
   // R - READ: Obtener un solo usuario por su ID
   getUserById(id: number): Observable<IUser> {
     return this.http.get<IUser>(`${this.apiUrl}/${id}`);
@@ -34,5 +36,4 @@ export class UserService {
     // La respuesta de un delete suele ser vacía o un objeto de éxito, por eso usamos 'any'
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
-
 }

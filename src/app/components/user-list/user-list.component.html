@@ -1,12 +1,29 @@
-<!-- src/app/components/user-list/user-list.component.html -->
-<div class="row">
-  @for (user of users(); track user.id) {
-  <div class="col-12 col-md-6 col-lg-3 mb-4">
-    <!-- Reemplazamos el div genérico con nuestro componente -->
-    <!-- Le pasamos el objeto 'user' del bucle a la propiedad 'user' del componente hijo -->
-    <app-user-card [user]="user"></app-user-card>
+<div class="container mt-5">
+  <div class="row">
+    <!-- 1. El @for ahora itera sobre la propiedad 'results' de nuestro signal -->
+    @for (user of usersResponse().results; track user.id) {
+    <div class="col-12 col-md-6 col-lg-3 mb-4">
+      <app-user-card [user]="user"></app-user-card>
+    </div>
+    } @empty {
+    <p>Cargando usuarios...</p>
+    }
   </div>
-  } @empty {
-  <p>Cargando usuarios o no hay usuarios para mostrar...</p>
-  }
+
+  <!-- 2. AÑADIMOS LA SECCIÓN DE PAGINACIÓN -->
+  <footer class="d-flex justify-content-center align-items-center mt-4 gap-3">
+    <button class="btn btn-primary" (click)="prevPage()" [disabled]="currentPage() === 1">
+      Anterior
+    </button>
+
+    <span>Página {{ currentPage() }} de {{ usersResponse().total_pages }}</span>
+
+    <button
+      class="btn btn-primary"
+      (click)="nextPage()"
+      [disabled]="currentPage() === usersResponse().total_pages"
+    >
+      Siguiente
+    </button>
+  </footer>
 </div>

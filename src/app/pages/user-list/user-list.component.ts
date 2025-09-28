@@ -7,17 +7,16 @@ import { UserService } from '../../services/user.service';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 // Asegúrate de que esta importación exista
 import { Iresponse } from '../../interfaces/iresponse.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-list',
-  standalone: true,
   imports: [UserCardComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
   private userService = inject(UserService);
-
   public currentPage: WritableSignal<number> = signal(1);
 
   // El NÚCLEO REACTIVO CORREGIDO
@@ -36,7 +35,33 @@ export class UserListComponent {
       } as Iresponse,
     }
   );
+  async handleUserDeletion(_id: string): Promise<void> {
+    const userToDelete = this.usersResponse().results.find((u) => u._id === _id);
+    const userName = userToDelete ? userToDelete.first_name : 'este usuario';
 
+    const result = await Swal.fire({
+      title: `¿Estás seguro de que quieres eliminar a ${userName}?`,
+      text: 'La API simulará la eliminación.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, ¡eliminar!',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      this.userService.deleteUser(_id).subscribe({
+        next: (response) => {
+          console.log('Usuario eliminado :', response);
+          Swal.fire('¡Eliminado!', `El usuario ${userName} ha sido eliminado.`, 'success');
+          // NO actualizamos la UI. La lista se quedará como está.
+        },
+        error: (err) => {
+          console.error('Error al eliminar:', err);
+          Swal.fire('Error', 'No se pudo simular la eliminación del usuario.', 'error');
+        },
+      });
+    }
+  }
   // --- Métodos para cambiar de página (sin cambios) ---
   nextPage(): void {
     this.currentPage.update((page) => page + 1);

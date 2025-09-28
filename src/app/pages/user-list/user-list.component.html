@@ -3,7 +3,7 @@
     <!-- 1. El @for ahora itera sobre la propiedad 'results' de nuestro signal -->
     @for (user of usersResponse().results; track user._id) {
     <div class="col-12 col-md-6 col-lg-3 mb-4">
-      <app-user-card [user]="user"></app-user-card>
+      <app-user-card [user]="user" (onDelete)="handleUserDeletion($event)"></app-user-card>
     </div>
     } @empty {
     <p>Cargando usuarios...</p>

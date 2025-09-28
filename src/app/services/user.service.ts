@@ -27,7 +27,7 @@ export class UserService {
   }
 
   // U - UPDATE: Actualizar un usuario existente
-  updateUser(_id: string, user: IUser): Observable<IUser> {
+  updateUser(_id: string, user: Partial<Omit<IUser, '_id'>>): Observable<IUser> {
     return this.http.put<IUser>(`${this.apiUrl}/${_id}`, user);
   }
 

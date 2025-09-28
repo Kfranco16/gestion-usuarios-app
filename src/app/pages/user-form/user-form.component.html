@@ -1,1 +1,110 @@
-<p>user-form works!</p>
+<div class="container mt-5" style="max-width: 600px">
+  <!-- 1. El título cambia dinámicamente -->
+  <h2>{{ isEditMode() ? 'Actualizar Usuario' : 'Nuevo Usuario' }}</h2>
+
+  <!-- 2. Conectamos el formulario con su FormGroup y el evento de envío -->
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Campo Nombre -->
+    <div class="mb-3">
+      <label for="first_name" class="form-label">Nombre Usuario</label>
+      <input
+        type="text"
+        id="first_name"
+        class="form-control"
+        formControlName="first_name"
+        placeholder="Introduzca nombre de usuario"
+      />
+      <!-- Mensajes de error -->
+      @if (userForm.get('first_name')?.invalid && userForm.get('first_name')?.touched) {
+      <div class="text-danger mt-1">El nombre es obligatorio.</div>
+      }
+    </div>
+
+    <!-- Campo Apellido -->
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Apellido Usuario</label>
+      <input
+        type="text"
+        id="last_name"
+        class="form-control"
+        formControlName="last_name"
+        placeholder="Introduzca apellido de usuario"
+      />
+      @if (userForm.get('last_name')?.invalid && userForm.get('last_name')?.touched) {
+      <div class="text-danger mt-1">El apellido es obligatorio.</div>
+      }
+    </div>
+
+    <!-- Campo Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email Usuario</label>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        formControlName="email"
+        placeholder="Introduzca email de usuario"
+      />
+      @if (userForm.get('email')?.touched) { @if (userForm.get('email')?.hasError('required')) {
+      <div class="text-danger mt-1">El email es obligatorio.</div>
+      } @if (userForm.get('email')?.hasError('email')) {
+      <div class="text-danger mt-1">El formato del email no es válido.</div>
+      } }
+    </div>
+
+    <!-- Campo Username -->
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        id="username"
+        class="form-control"
+        formControlName="username"
+        placeholder="Introduzca el username"
+      />
+      @if (userForm.get('username')?.invalid && userForm.get('username')?.touched) {
+      <div class="text-danger mt-1">El username es obligatorio.</div>
+      }
+    </div>
+
+    <!-- Campo Imagen -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Imagen Usuario</label>
+      <input
+        type="text"
+        id="image"
+        class="form-control"
+        formControlName="image"
+        placeholder="Introduzca url de foto usuario"
+      />
+      @if (userForm.get('image')?.invalid && userForm.get('image')?.touched) {
+      <div class="text-danger mt-1">La URL de la imagen es obligatoria.</div>
+      }
+    </div>
+    @if (!isEditMode()) {
+    <!-- Campo Contraseña -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        formControlName="password"
+        placeholder="Introduzca la contraseña"
+      />
+      @if (userForm.get('password')?.touched && userForm.get('password')?.invalid) { @if
+      (userForm.get('password')?.hasError('required')) {
+      <div class="text-danger mt-1">La contraseña es obligatoria.</div>
+      } @if (userForm.get('password')?.hasError('minlength')) {
+      <div class="text-danger mt-1">La contraseña debe tener al menos 4 caracteres.</div>
+      } }
+    </div>
+
+    }
+
+    <!-- 3. El texto del botón cambia dinámicamente -->
+    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+      {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
+    </button>
+  </form>
+</div>

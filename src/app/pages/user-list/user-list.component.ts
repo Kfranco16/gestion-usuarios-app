@@ -4,7 +4,7 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { UserService } from '../../services/user.service';
-import { UserCardComponent } from '../user-card/user-card.component';
+import { UserCardComponent } from '../../components/user-card/user-card.component';
 // Asegúrate de que esta importación exista
 import { Iresponse } from '../../interfaces/iresponse.interface';
 

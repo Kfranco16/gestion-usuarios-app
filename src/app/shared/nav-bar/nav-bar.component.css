@@ -1,0 +1,17 @@
+/* Hace espacio para la barra fija */
+body {
+  padding-top: 56px;
+}
+
+/* Estilo para la barra de navegación */
+
+/* Estilo moderno para el enlace Home */
+.home-link {
+  transition: color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.home-link:hover {
+  color: #0d6efd;
+  text-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.15);
+}

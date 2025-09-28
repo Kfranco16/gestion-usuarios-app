@@ -1,15 +1,6 @@
-<!-- src/app/app.component.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/home">Gestor de Usuarios</a>
-    <div class="navbar-nav">
-      <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
-      <!-- Aquí irá el enlace a "Nuevo Usuario" más adelante -->
-    </div>
-  </div>
-</nav>
+<app-nav-bar></app-nav-bar>
 
-<main class="container mt-4">
+<main>
   <router-outlet></router-outlet>
   <!-- El componente de la ruta activa se renderizará aquí -->
 </main>

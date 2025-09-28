@@ -12,9 +12,13 @@
     <!-- Grupo de botones de acción -->
     <div class="mt-auto">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-sm btn-outline-primary" title="Ver detalle">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary"
+          title="Ver detalle"
+          [routerLink]="['/user', user()._id]"
+        >
           <i class="bi bi-search"></i>
-          <!-- Usaremos un icono -->
         </button>
         <button type="button" class="btn btn-sm btn-outline-secondary" title="Actualizar">
           <i class="bi bi-pencil-square"></i>

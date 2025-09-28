@@ -20,9 +20,13 @@
         >
           <i class="bi bi-search"></i>
         </button>
-        <button type="button" class="btn btn-sm btn-outline-secondary" title="Actualizar">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          title="Actualizar"
+          [routerLink]="['/updateuser', user()._id]"
+        >
           <i class="bi bi-pencil-square"></i>
-          <!-- Usaremos un icono -->
         </button>
         <button type="button" class="btn btn-sm btn-outline-danger" title="Borrar">
           <i class="bi bi-trash"></i>

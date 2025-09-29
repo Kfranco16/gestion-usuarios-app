@@ -12,7 +12,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { IUser } from '../../interfaces/iuser.interface'; // (o User si la llamaste así)
+import { IUser } from '../../interfaces/iuser.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-form',
@@ -59,8 +60,14 @@ export class UserFormComponent implements OnInit {
             this.userForm.patchValue(user);
           },
           error: (err) => {
-            console.error('Error al cargar el usuario para edición:', err);
-            this.router.navigate(['/home']);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al Cargar Usuario',
+              text: 'No se pudo cargar la información del usuario',
+              confirmButtonColor: '#dc3545',
+            }).then(() => {
+              this.router.navigate(['/home']);
+            });
           },
         });
       }
@@ -75,8 +82,25 @@ export class UserFormComponent implements OnInit {
   onSubmit(): void {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de Validación',
+        text: 'Por favor, revisa todos los campos del formulario',
+        confirmButtonColor: '#dc3545',
+      });
       return;
     }
+
+    // Mostrar loading mientras se procesa
+    Swal.fire({
+      title: 'Procesando...',
+      html: this.isEditMode() ? 'Actualizando usuario' : 'Creando nuevo usuario',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
     if (this.isEditMode()) {
       const { first_name, last_name, email, username, image } = this.userForm.value;
@@ -84,23 +108,47 @@ export class UserFormComponent implements OnInit {
 
       this.userService.updateUser(this._id!, updatedData as Partial<IUser>).subscribe({
         next: () => {
-          alert('Usuario actualizado con éxito');
-          this.router.navigate(['/home']);
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Usuario actualizado correctamente',
+            confirmButtonColor: '#198754',
+          }).then(() => {
+            this.router.navigate(['/home']);
+          });
         },
-        error: (err) => console.error('Error al actualizar el usuario:', err),
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al Actualizar',
+            text: err.error?.message || 'Ocurrió un error al actualizar el usuario',
+            confirmButtonColor: '#dc3545',
+          });
+        },
       });
     } else {
-      // CORRECCIÓN: Se omite 'image' del payload de creación para que coincida con la API.
       const { first_name, last_name, email, username, password } = this.userForm.value;
       const newUserData = { first_name, last_name, email, username, password };
 
-      // También, asegúrate de que tu servicio en el método createUser espera Omit<IUser, '_id'>
       this.userService.createUser(newUserData).subscribe({
         next: () => {
-          alert('Usuario creado con éxito');
-          this.router.navigate(['/home']);
+          Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Usuario creado correctamente',
+            confirmButtonColor: '#198754',
+          }).then(() => {
+            this.router.navigate(['/home']);
+          });
         },
-        error: (err) => console.error('Error al crear el usuario:', err),
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al Crear',
+            text: err.error?.message || 'Ocurrió un error al crear el usuario',
+            confirmButtonColor: '#dc3545',
+          });
+        },
       });
     }
   }

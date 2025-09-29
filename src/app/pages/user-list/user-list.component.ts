@@ -1,11 +1,8 @@
-// src/app/components/user-list/user-list.component.ts
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-// 1. IMPORTA toObservable
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
-// Asegúrate de que esta importación exista
 import { Iresponse } from '../../interfaces/iresponse.interface';
 import Swal from 'sweetalert2';
 

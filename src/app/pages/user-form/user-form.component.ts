@@ -1,5 +1,3 @@
-// src/app/components/user-form/user-form.component.ts
-
 import { Component, Input, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -22,17 +20,14 @@ import Swal from 'sweetalert2';
   styleUrl: './user-form.component.css',
 })
 export class UserFormComponent implements OnInit {
-  // --- 1. Inyección de Dependencias ---
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private router = inject(Router);
 
-  // --- 2. Entradas y Estado con Signals ---
   @Input() _id?: string;
   public isEditMode = computed(() => !!this._id);
   private userToUpdate = signal<IUser | null>(null);
 
-  // --- 3. Definición del Formulario Reactivo ---
   public userForm: FormGroup;
 
   constructor() {
@@ -46,10 +41,8 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  // --- 4. Lógica del Ciclo de Vida (ngOnInit) ---
   ngOnInit(): void {
     if (this.isEditMode()) {
-      // En modo edición, solo requerimos la contraseña si se proporciona
       this.userForm.get('password')?.setValidators([]);
       this.userForm.get('confirmPassword')?.setValidators([]);
 
@@ -72,7 +65,6 @@ export class UserFormComponent implements OnInit {
         });
       }
     } else {
-      // En modo creación, mantenemos todas las validaciones
       this.userForm.get('password')?.setValidators([Validators.required, Validators.minLength(4)]);
     }
     this.userForm.updateValueAndValidity();

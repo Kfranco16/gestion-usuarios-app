@@ -11,11 +11,9 @@ export class UserService {
   private apiUrl = 'https://peticiones.online/api/users';
 
   getUsers(page: number): Observable<Iresponse> {
-    // Usamos el objeto de opciones de HttpClient para añadir parámetros a la URL de forma segura
     const options = { params: { page: page.toString() } };
     return this.http.get<Iresponse>(this.apiUrl, options);
   }
-  // R - READ: Obtener un solo usuario por su ID
   getUserById(_id: string): Observable<IUser> {
     return this.http.get<IUser>(`${this.apiUrl}/${_id}`);
   }

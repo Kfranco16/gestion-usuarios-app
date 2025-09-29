@@ -1,10 +1,7 @@
 <div class="container mt-5" style="max-width: 600px">
-  <!-- 1. El título cambia dinámicamente -->
   <h2>{{ isEditMode() ? 'Actualizar Usuario' : 'Nuevo Usuario' }}</h2>
 
-  <!-- 2. Conectamos el formulario con su FormGroup y el evento de envío -->
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
-    <!-- Campo Nombre -->
     <div class="mb-3">
       <label for="first_name" class="form-label">Nombre Usuario</label>
       <input
@@ -14,13 +11,11 @@
         formControlName="first_name"
         placeholder="Introduzca nombre de usuario"
       />
-      <!-- Mensajes de error -->
       @if (userForm.get('first_name')?.invalid && userForm.get('first_name')?.touched) {
       <div class="text-danger mt-1">El nombre es obligatorio.</div>
       }
     </div>
 
-    <!-- Campo Apellido -->
     <div class="mb-3">
       <label for="last_name" class="form-label">Apellido Usuario</label>
       <input

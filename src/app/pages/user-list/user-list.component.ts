@@ -16,11 +16,9 @@ export class UserListComponent {
   private userService = inject(UserService);
   public currentPage: WritableSignal<number> = signal(1);
 
-  // El NÚCLEO REACTIVO CORREGIDO
   public usersResponse = toSignal(
-    // 2. CONVERTIMOS EL SIGNAL EN UN OBSERVABLE
     toObservable(this.currentPage).pipe(
-      switchMap((page: number) => this.userService.getUsers(page)) // 3. AÑADIMOS EL TIPO A 'page'
+      switchMap((page: number) => this.userService.getUsers(page))
     ),
     {
       initialValue: {
@@ -50,7 +48,6 @@ export class UserListComponent {
         next: (response) => {
           console.log('Usuario eliminado :', response);
           Swal.fire('¡Eliminado!', `El usuario ${userName} ha sido eliminado.`, 'success');
-          // NO actualizamos la UI. La lista se quedará como está.
         },
         error: (err) => {
           console.error('Error al eliminar:', err);
@@ -59,7 +56,7 @@ export class UserListComponent {
       });
     }
   }
-  // --- Métodos para cambiar de página (sin cambios) ---
+
   nextPage(): void {
     this.currentPage.update((page) => page + 1);
   }

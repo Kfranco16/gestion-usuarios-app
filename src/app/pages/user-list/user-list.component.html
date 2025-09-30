@@ -1,6 +1,5 @@
 <div class="container mt-5">
   <div class="row">
-    <!-- 1. El @for ahora itera sobre la propiedad 'results' de nuestro signal -->
     @for (user of usersResponse().results; track user._id) {
     <div class="col-12 col-md-6 col-lg-3 mb-4">
       <app-user-card [user]="user" (onDelete)="handleUserDeletion($event)"></app-user-card>
@@ -10,7 +9,6 @@
     }
   </div>
 
-  <!-- 2. AÑADIMOS LA SECCIÓN DE PAGINACIÓN -->
   <footer class="d-flex justify-content-center align-items-center mt-4 gap-3">
     <button class="btn btn-primary" (click)="prevPage()" [disabled]="currentPage() === 1">
       Anterior

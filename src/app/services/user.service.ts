@@ -18,20 +18,15 @@ export class UserService {
     return this.http.get<IUser>(`${this.apiUrl}/${_id}`);
   }
 
-  // C - CREATE: Crear un nuevo usuario
-  // (Recibe un usuario sin ID y la API debería devolver el usuario completo con ID)
   createUser(user: Omit<IUser, '_id'>): Observable<IUser> {
     return this.http.post<IUser>(this.apiUrl, user);
   }
 
-  // U - UPDATE: Actualizar un usuario existente
   updateUser(_id: string, user: Partial<Omit<IUser, '_id'>>): Observable<IUser> {
     return this.http.put<IUser>(`${this.apiUrl}/${_id}`, user);
   }
 
-  // D - DELETE: Eliminar un usuario
   deleteUser(_id: string): Observable<any> {
-    // La respuesta de un delete suele ser vacía o un objeto de éxito, por eso usamos 'any'
     return this.http.delete<any>(`${this.apiUrl}/${_id}`);
   }
 }

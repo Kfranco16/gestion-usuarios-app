@@ -1,13 +1,6 @@
 import { Component, Input, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/iuser.interface';
@@ -43,9 +36,6 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isEditMode()) {
-      this.userForm.get('password')?.setValidators([]);
-      this.userForm.get('confirmPassword')?.setValidators([]);
-
       if (this._id) {
         this.userService.getUserById(this._id).subscribe({
           next: (user) => {
@@ -70,30 +60,7 @@ export class UserFormComponent implements OnInit {
     this.userForm.updateValueAndValidity();
   }
 
-  // --- 5. Lógica de Envío del Formulario ---
   onSubmit(): void {
-    if (this.userForm.invalid) {
-      this.userForm.markAllAsTouched();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error de Validación',
-        text: 'Por favor, revisa todos los campos del formulario',
-        confirmButtonColor: '#dc3545',
-      });
-      return;
-    }
-
-    // Mostrar loading mientras se procesa
-    Swal.fire({
-      title: 'Procesando...',
-      html: this.isEditMode() ? 'Actualizando usuario' : 'Creando nuevo usuario',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
     if (this.isEditMode()) {
       const { first_name, last_name, email, username, image } = this.userForm.value;
       const updatedData = { first_name, last_name, email, username, image };

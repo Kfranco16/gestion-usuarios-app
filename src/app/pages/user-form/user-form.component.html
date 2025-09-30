@@ -30,7 +30,6 @@
       }
     </div>
 
-    <!-- Campo Email -->
     <div class="mb-3">
       <label for="email" class="form-label">Email Usuario</label>
       <input
@@ -47,7 +46,6 @@
       } }
     </div>
 
-    <!-- Campo Username -->
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
       <input
@@ -62,7 +60,6 @@
       }
     </div>
 
-    <!-- Campo Imagen -->
     <div class="mb-3">
       <label for="image" class="form-label">Imagen Usuario</label>
       <input
@@ -77,7 +74,7 @@
       }
     </div>
     @if (!isEditMode()) {
-    <!-- Campo Contraseña -->
+
     <div class="mb-3">
       <label for="password" class="form-label">Contraseña</label>
       <input
@@ -97,7 +94,6 @@
 
     }
 
-    <!-- 3. El texto del botón cambia dinámicamente -->
     <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
       {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
     </button>
